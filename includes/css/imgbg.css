@@ -1,0 +1,32 @@
+body, html {
+    height: 100%;
+    background-color: black;
+}
+
+.bg {
+    background-image: url("https://www.bordeaux-tourism.co.uk/sites/bordeaux_tourisme/files/medias/widgets/misc/%C2%A9picsol-19-Picsol.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.bg::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: rgba(0,0,0,0.75);
+}
+
+.caption {
+    position: absolute;
+    left: 0;
+    top: 2%;
+    width: 100%;
+}
