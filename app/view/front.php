@@ -1,10 +1,17 @@
 <?php
 session_start();
 if(!isset($_SESSION['id'])) {
-    header("Location: /login.php");
+    header("Location: /app/view/login.php");
 }
 
 include '../controler/HomeView.php';
+include '../controler/ProductList.php';
+include '../controler/ProductForm.php';
+include '../controler/SaleList.php';
+include '../controler/SaleForm.php';
+include '../controler/TipeProductList.php';
+include '../controler/TipeProductForm.php';
+include '../controler/UserView.php';
 
 if (isset($_GET['class']) && !empty($_GET['class'])) {
     $container = '..\controler\\'.$_GET['class'].'.php';
@@ -29,7 +36,7 @@ $menu_replace =  str_replace("{usuario}",$_SESSION['firstname'],$menu);
     <?php
     echo $menu_replace;
     ?>
-<div class="container p-4 bg-white">
+<div class="container p-4">
     <?php
     //include $container;
     echo $container_data;

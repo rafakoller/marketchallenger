@@ -22,7 +22,6 @@ if(isset($_POST['submit'])) {
         $_SESSION['name'] = $login->nameUser();
         $_SESSION['firstname'] = $login->firstnameUser();
         $_SESSION['email'] = $login->emailUser();
-        sleep(2);
         header("Location: /index.php");
     } else if ($result == 10){
         echo "<script> $(document).ready(function(){ $('#wrongpass').slideDown('slow');}); </script>";

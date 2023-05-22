@@ -19,6 +19,13 @@ class HomeView extends Market {
              $lastsells .= '["'.$day.'",  '.$value.'],';
          }
 
+         // get products top sellers of month
+         $topsellsMont = parent::getTopSelMonthProducts();
+         $topsells = '';
+         foreach ($topsellsMont as $prods){
+             $topsells .= '["'.$prods['Product'].'", "R$ '.$prods['Price'].'", "'.$prods['Proportion'].'"],';
+         }
+
          // get values of invoicing
          $amountCost = parent::getAmountCost();
          $amountTax = parent::getAmountTax();
@@ -66,15 +73,15 @@ class HomeView extends Market {
           </div>
       </div>
       </div>
-      <hr class="bg-200 mb-6 mt-4" />
-              <div class="row flex-between-center mb-4 g-3">
-                <div class="col-auto">
+              <div class="row flex-between-center mb-4 g-3 card overflow-hidden shadow">
+                <div class="col-auto p-3 pt-0 pb-0">
                   <h3>Sells in last month</h3>
-                  <p class="text-700 lh-sm mb-0">Payment received across PDV</p>
+                  <p class="text-700 lh-sm mb-0 p-3 pt-0 pb-0">Payment received across PDV</p>
                 </div>
                 <script type="text/javascript">
-                      google.charts.load("current", {"packages":["corechart"]});
+                      google.charts.load("current", {"packages":["corechart","table"]});
                       google.charts.setOnLoadCallback(drawChartSeller);
+                      google.charts.setOnLoadCallback(drawTableTopSellers);
                       google.charts.setOnLoadCallback(drawChartInvoicingPercent);
                 
                       function drawChartSeller() {
@@ -90,6 +97,25 @@ class HomeView extends Market {
                     var charts = new google.visualization.AreaChart(document.getElementById("chart_sells_month"));
                         charts.draw(datas, optionss);
                       }
+                      
+                      function drawTableTopSellers() {
+                            var datat = new google.visualization.DataTable();
+                             datat.addColumn("string", "Product");
+                             datat.addColumn("string", "Price");
+                             datat.addColumn("string", "Proportion");
+                             datat.addRows([
+                              '.$topsells.'
+                             ]);
+                    
+                            var optionst = {
+                              showRowNumber: true, 
+                              width: "100%", 
+                              height: "100%"
+                            };
+                    
+                        var table = new google.visualization.Table(document.getElementById("chart_top_sellers"));
+                            table.draw(datat, optionst);
+                          }
                       
                       function drawChartInvoicingPercent() {
                         var datai = google.visualization.arrayToDataTable([
@@ -107,13 +133,20 @@ class HomeView extends Market {
                         charti.draw(datai, optionsi);
                       }
                 </script>
-              </div>
               <div id="chart_sells_month" class="echart-total-sales-chart" style="min-height:320px;width:100%" data-echart-responsive="data-echart-responsive"></div>
-              <hr class="bg-200 mb-6 mt-4" />
-              <div class="row">
-              <div id="chart_invoicings_values" class="echart-total-sales-chart col-6" style="min-height:320px;" data-echart-responsive="data-echart-responsive"></div>
-              <div id="chart_invoicings_percent" class="echart-total-sales-chart col-6" style="min-height:320px;" data-echart-responsive="data-echart-responsive"></div>
-              </div>';
+              </div>
+              <div class="row pb-5">
+                  <div class="col-sm-12 col-md-6">
+                    <div class="card shadow p-3 pb-0 pt-1">
+                        <div id="chart_top_sellers" class="echart-total-sales-chart" style="min-height:320px;" ></div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-6">
+                    <div class="card shadow">
+                        <div id="chart_invoicings_percent" class="echart-total-sales-chart" style="min-height:320px;" ></div>
+                    </div>
+                  </div> 
+              </div><br>';
          return $this->dataclass;
      }
 

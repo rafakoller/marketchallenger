@@ -46,6 +46,57 @@ class Market extends Connection {
     }
 
     /**
+     * Get Top 10 Products Seller last month
+     * @return integer
+     */
+    public function getTopSelMonthProducts()
+    {
+        $products = [
+            [
+                'Product' => 'Tomatoes',
+                'Price' => 6.88,
+                'Proportion' => "78/100"
+            ],[
+                'Product' => 'Chicken',
+                'Price' => 16.32,
+                'Proportion' => "76/100"
+            ],[
+                'Product' => 'Whey Protein',
+                'Price' => 55.18,
+                'Proportion' => "74/100"
+            ],[
+                'Product' => 'Integral Rice',
+                'Price' => 1.82,
+                'Proportion' => "73/100"
+            ],[
+                'Product' => 'Sugar',
+                'Price' => 1.28,
+                'Proportion' => "73/100"
+            ],[
+                'Product' => 'Flavor',
+                'Price' => 2.04,
+                'Proportion' => "72/100"
+            ],[
+                'Product' => 'Whiskey',
+                'Price' => 5.87,
+                'Proportion' => "70/100"
+            ],[
+                'Product' => 'Cookies',
+                'Price' => 0.88,
+                'Proportion' => "69/100"
+            ],[
+                'Product' => 'Coca-Cola',
+                'Price' => 3.08,
+                'Proportion' => "66/100"
+            ],[
+                'Product' => 'Milk',
+                'Price' => 2.56,
+                'Proportion' => "65/100"
+            ]];
+        return $products;
+    }
+
+    /**
      * Get amount of Cash
      * @return integer
      */
