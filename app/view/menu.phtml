@@ -7,22 +7,28 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/app/view/front.php?class=HomeView">Home</a>
+                    <a class="nav-link {HomeView}" aria-current="page" href="/app/view/front.php?class=HomeView">Home</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Catalogs
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/app/view/front.php?class=ProductList">Products</a></li>
-                        <li><a class="dropdown-item" href="/app/view/front.php?class=TipeProductList">Tipe Products</a></li>
+                        <li><a class="dropdown-item {ProductList}" href="/app/view/front.php?class=ProductList">Products</a></li>
+                        <li><a class="dropdown-item {TypeProductList}" href="/app/view/front.php?class=TypeProductList">Type Products</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/app/view/front.php?class=SaleList">Sales</a>
+                    <a class="nav-link {StockList}" href="/app/view/front.php?class=StockList">Stock</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/app/view/front.php?class=SaleForm">PDV</a>
+                    <a class="nav-link {PurchaseList}" href="/app/view/front.php?class=PurchaseList">Purchases</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {SaleList}" href="/app/view/front.php?class=SaleList">Sales</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {SaleForm}" href="/app/view/front.php?class=SaleForm">PDV</a>
                 </li>
             </ul>
             <ul class="navbar-nav mb-2 mb-lg-0 d-flex">

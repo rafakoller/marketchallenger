@@ -10,7 +10,7 @@ class ProductForm extends Market
 
     public $dataclass;
 
-    public function getData()
+    public function getData($action = null)
     {
         $this->dataclass = '<div class="pb-5">
                                 <div class="row g-4">

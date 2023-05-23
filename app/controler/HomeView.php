@@ -10,7 +10,7 @@ class HomeView extends Market {
 
      public $dataclass;
 
-     public function getData()
+     public function getData($action = null)
      {
          // get quantity of orders per day in last month
          $salastmonth = parent::getLastMonthOrders();
@@ -23,7 +23,7 @@ class HomeView extends Market {
          $topsellsMont = parent::getTopSelMonthProducts();
          $topsells = '';
          foreach ($topsellsMont as $prods){
-             $topsells .= '["'.$prods['Product'].'", "R$ '.$prods['Price'].'", "'.$prods['Proportion'].'"],';
+             $topsells .= '["'.$prods['Product'].'", "R$ '.$prods['Price'].'", "'.$prods['Proportion'].' orders"],';
          }
 
          // get values of invoicing
@@ -56,7 +56,7 @@ class HomeView extends Market {
                 <div class="col-12 col-md-auto">
                   <div class="d-flex align-items-center"><img src="https://prium.github.io/phoenix/v1.12.0/assets/img/icons/illustrations/3l.png" alt="" height="46" width="46" />
                     <div class="ms-3">
-                      <h4 class="mb-0">'.parent::getAmountTipeProducts().' tipes</h4>
+                      <h4 class="mb-0">'.parent::getAmountTypeProducts().' types</h4>
                       <p class="text-800 fs--1 mb-0">Of Products</p>
                     </div>
                   </div>
@@ -100,13 +100,13 @@ class HomeView extends Market {
                       
                       function drawTableTopSellers() {
                             var datat = new google.visualization.DataTable();
-                             datat.addColumn("string", "Product");
+                             datat.addColumn("string", "Top selling Products");
                              datat.addColumn("string", "Price");
                              datat.addColumn("string", "Proportion");
                              datat.addRows([
                               '.$topsells.'
                              ]);
-                    
+                  
                             var optionst = {
                               showRowNumber: true, 
                               width: "100%", 
@@ -119,7 +119,7 @@ class HomeView extends Market {
                       
                       function drawChartInvoicingPercent() {
                         var datai = google.visualization.arrayToDataTable([
-                          ["Tipe", "Value"],
+                          ["Type", "Value"],
                           ["Cost", '.$perCost.'],
                           ["Tax", '.$perTax.'],
                           ["Profit", '.$perProfit.']

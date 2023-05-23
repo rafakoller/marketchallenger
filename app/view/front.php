@@ -5,26 +5,84 @@ if(!isset($_SESSION['id'])) {
 }
 
 include '../controler/HomeView.php';
+//include '../model/Product.php';
 include '../controler/ProductList.php';
 include '../controler/ProductForm.php';
+//include '../model/Sale.php';
 include '../controler/SaleList.php';
 include '../controler/SaleForm.php';
-include '../controler/TipeProductList.php';
-include '../controler/TipeProductForm.php';
+include '../model/TypeProduct.php';
+include '../controler/TypeProductList.php';
+include '../controler/TypeProductForm.php';
 include '../controler/UserView.php';
+include '../controler/ErrorView.php';
 
-if (isset($_GET['class']) && !empty($_GET['class'])) {
-    $container = '..\controler\\'.$_GET['class'].'.php';
-    $class = new $_GET['class'];
-    $container_data = $class->getData();
-} else {
-    $container = '..\controler\HomeView.php';
-    $class = new HomeView;
-    $container_data = $class->getData();
-}
+$classes = get_declared_classes();
 
+// load top menu and set the name of logged user
 $menu = file_get_contents('menu.phtml');
 $menu_replace =  str_replace("{usuario}",$_SESSION['firstname'],$menu);
+
+// consult if have a class in url
+if (isset($_GET['class']) && !empty($_GET['class'])) {
+
+    // load status, key and pagination from obj wen have it
+    $data = [];
+    $data['status'] = (isset($_GET['status'])) ? $_GET['status'] : null;
+    $data['key'] = (isset($_GET['key'])) ? $_GET['key'] : null;
+    //echo $_GET['page'].'<br>';
+    if(!empty($_GET['page']))
+    {
+        if ($_GET['page'] == 0) {$_GET['page'] = 1;}
+        $page = $_GET['page'];
+
+    }
+    $data['page'] = (isset($page))?$page:null;
+
+    // load object of class wen edit
+    if ($data['key'] != null) {
+        $data['obj'] = $_GET['class']::getObj($data['key']);
+    }
+
+    // consult if class exist
+    if (!in_array($_GET['class'],$classes)) {
+
+        // error view wen class dont exist
+        $class = new ErrorView;
+        $container_data = $class->getData($data);
+        $menu_replace =  str_replace("{ErrorView}",'active',$menu);
+
+    } else {
+
+        // point to class form wen object is set
+        $reclass = (isset($data['obj']) || $data['status']==10)?$_GET['class'].'Form':$_GET['class'];
+        $class = new $reclass();
+
+        // consult if is a post or not to redirect to rigth place
+        if (isset($_POST) && !empty($_POST)) {
+
+            // if a post, return so same class to show confirm and load obj
+            $returndata = $class->onPost($_POST);
+            $status = (!empty($returndata['status']))?'&status='.$returndata['status']:'';
+            $key = (!empty($returndata['key']))?'&key='.$returndata['key']:'';
+            header("Location: /app/view/front.php?class=".$_GET['class'].$status.$key);
+
+        } else {
+
+            // load data status and obj wen have it
+            $container_data = $class->getData($data);
+            $menu_replace =  str_replace("{".$_GET['class']."}",'active',$menu);
+        }
+    }
+
+} else {
+
+    // set the home as default class, when we don't have one
+    $class = new HomeView;
+    $container_data = $class->getData();
+    $menu_replace =  str_replace("{HomeView}",'active',$menu);
+
+}
 
 ?>
 <!DOCTYPE html>
@@ -38,7 +96,6 @@ $menu_replace =  str_replace("{usuario}",$_SESSION['firstname'],$menu);
     ?>
 <div class="container p-4">
     <?php
-    //include $container;
     echo $container_data;
     ?>
 </div>

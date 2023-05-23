@@ -18,12 +18,17 @@ class Market extends Connection {
     }
 
     /**
-     * Get amount of Tipe of Products
+     * Get amount of Type of Products
      * @return integer
      */
-    public function getAmountTipeProducts()
+    public function getAmountTypeProducts()
     {
-        return 18;
+        $db = new Connection();
+        $con = $db->getConnection();
+        $query = "SELECT * FROM product_type;";
+        $result = mysqli_query($con, $query) or die(mysqli_error($con));
+        $count = mysqli_num_rows($result);
+        return $count;
     }
 
     /**
