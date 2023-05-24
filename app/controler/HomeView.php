@@ -39,36 +39,46 @@ class HomeView extends Market {
 
          $this->dataclass = '<div class="pb-5">
           <div class="row g-4">
-            <div class="col-12 col-xxl-6">
+            <div class="col-12">
               <div class="mb-8">
                 <h2 class="mb-2">Dashboard</h2>
                 <h5 class="text-700 fw-semi-bold">Here’s what’s going on at your Market right now</h5>
               </div>
               <div class="row align-items-center g-4">
-                <div class="col-12 col-md-auto">
+                <div class="col-12 col-sm-6 col-md-3">
                   <div class="d-flex align-items-center"><img src="https://prium.github.io/phoenix/v1.12.0/assets/img/icons/illustrations/4l.png" alt="" height="46" width="46" />
                     <div class="ms-3">
-                      <h4 class="mb-0">'.parent::getAmountOrders().' new orders</h4>
-                      <p class="text-800 fs--1 mb-0">Awating processing</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-auto">
-                  <div class="d-flex align-items-center"><img src="https://prium.github.io/phoenix/v1.12.0/assets/img/icons/illustrations/3l.png" alt="" height="46" width="46" />
-                    <div class="ms-3">
-                      <h4 class="mb-0">'.parent::getAmountTypeProducts().' types</h4>
-                      <p class="text-800 fs--1 mb-0">Of Products</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-auto">
-                  <div class="d-flex align-items-center"><img src="https://prium.github.io/phoenix/v1.12.0/assets/img/icons/illustrations/2l.png" alt="" height="46" width="46" />
-                    <div class="ms-3">
-                      <h4 class="mb-0">'.parent::getAmountProducts().' products</h4>
+                      <h4 class="mb-0">'.parent::getAmountProducts().' Products</h4>
                       <p class="text-800 fs--1 mb-0">Ready for sale</p>
                     </div>
                   </div>
                 </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                  <div class="d-flex align-items-center"><img src="https://prium.github.io/phoenix/v1.12.0/assets/img/icons/illustrations/4l.png" alt="" height="46" width="46" />
+                    <div class="ms-3">
+                      <h4 class="mb-0">'.parent::getAmountTypeProducts().' Types</h4>
+                      <p class="text-800 fs--1 mb-0">Of Products</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                  <div class="d-flex align-items-center"><img src="https://prium.github.io/phoenix/v1.12.0/assets/img/icons/illustrations/2l.png" alt="" height="46" width="46" />
+                    <div class="ms-3">
+                      <h4 class="mb-0">'.parent::getAmountOutOffProducts().' Products</h4>
+                      <p class="text-800 fs--1 mb-0">Out off stock</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                  <div class="d-flex align-items-center"><img src="https://prium.github.io/phoenix/v1.12.0/assets/img/icons/illustrations/3l.png" alt="" height="46" width="46" />
+                    <div class="ms-3">
+                      <h4 class="mb-0">'.parent::getAmountOrders().' Order</h4>
+                      <p class="text-800 fs--1 mb-0">Products sold</p>
+                    </div>
+                  </div>
+                </div>
+                
+                
               </div>
           </div>
       </div>

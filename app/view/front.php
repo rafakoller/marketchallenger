@@ -5,12 +5,14 @@ if(!isset($_SESSION['id'])) {
 }
 
 include '../controler/HomeView.php';
-//include '../model/Product.php';
+include '../model/Stock.php';
+include '../controler/StockList.php';
+include '../model/Product.php';
 include '../controler/ProductList.php';
 include '../controler/ProductForm.php';
-//include '../model/Sale.php';
-include '../controler/SaleList.php';
-include '../controler/SaleForm.php';
+include '../model/Order.php';
+include '../controler/OrderList.php';
+include '../controler/OrderForm.php';
 include '../model/TypeProduct.php';
 include '../controler/TypeProductList.php';
 include '../controler/TypeProductForm.php';
@@ -21,7 +23,7 @@ $classes = get_declared_classes();
 
 // load top menu and set the name of logged user
 $menu = file_get_contents('menu.phtml');
-$menu_replace =  str_replace("{usuario}",$_SESSION['firstname'],$menu);
+
 
 // consult if have a class in url
 if (isset($_GET['class']) && !empty($_GET['class'])) {
@@ -83,6 +85,8 @@ if (isset($_GET['class']) && !empty($_GET['class'])) {
     $menu_replace =  str_replace("{HomeView}",'active',$menu);
 
 }
+
+$menu_replace =  str_replace("{usuario}",$_SESSION['firstname'],$menu);
 
 ?>
 <!DOCTYPE html>

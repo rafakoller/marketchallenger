@@ -1,11 +1,11 @@
 <?php
 
 /**
- * ProductList class
+ * OrderList class
  *
  * @author Rafael Koller <rafakoller@gmail.com>
  */
-class ProductList extends Product
+class OrderList extends Order
 {
 
     const LIMITE = 10;
@@ -20,14 +20,14 @@ class ProductList extends Product
         }
 
         $registers = $this->getRegisters(self::LIMITE,$pagecurr);
-        $pagination = $this->helper::getPagination(self::LIMITE,$pagecurr,'product');
+        $pagination = $this->helper::getPagination(self::LIMITE,$pagecurr,'order');
 
         $this->dataclass = '<div class="pb-5">
                                 <div class="row g-4">
                                     <div class="col-12 col-xxl-6">
                                       <div class="mb-8">
-                                        <h2 class="mb-2">List of products</h2>
-                                        <h5 class="text-700 fw-semi-bold">Products list</h5>
+                                        <h2 class="mb-2">List of orders</h2>
+                                        <h5 class="text-700 fw-semi-bold">Orders list</h5>
                                       </div>
                                     </div>
                                 </div>
@@ -39,7 +39,7 @@ class ProductList extends Product
                                 </div>
                                 <div class="row">
                                     <div class="col-6 col-md-3">
-                                        <a class="btn btn-primary" href="front.php?class=ProductForm">Add Product</a>
+                                        <a class="btn btn-primary" href="front.php?class=OrderForm">POS</a>
                                     </div>
                                 </div>
                                 <br>

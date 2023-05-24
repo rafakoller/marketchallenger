@@ -14,7 +14,12 @@ class Market extends Connection {
      */
     public function getAmountProducts()
     {
-        return 173;
+        $db = new Connection();
+        $con = $db->getConnection();
+        $query = "SELECT * FROM product;";
+        $result = mysqli_query($con, $query) or die(mysqli_error($con));
+        $count = mysqli_num_rows($result);
+        return $count;
     }
 
     /**
@@ -26,6 +31,20 @@ class Market extends Connection {
         $db = new Connection();
         $con = $db->getConnection();
         $query = "SELECT * FROM product_type;";
+        $result = mysqli_query($con, $query) or die(mysqli_error($con));
+        $count = mysqli_num_rows($result);
+        return $count;
+    }
+
+    /**
+     * Get amount of Products out off
+     * @return integer
+     */
+    public function getAmountOutOffProducts()
+    {
+        $db = new Connection();
+        $con = $db->getConnection();
+        $query = "SELECT * FROM stock WHERE `stock` = 0;";
         $result = mysqli_query($con, $query) or die(mysqli_error($con));
         $count = mysqli_num_rows($result);
         return $count;
