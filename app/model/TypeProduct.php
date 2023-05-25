@@ -31,13 +31,13 @@ class TypeProduct extends Connection
             // object already exist
         } else {
             if (!isset($data['id'])) {
-                $query = "INSERT INTO product_type VALUES('','{$data['type']}','{$data['tax']}')";
+                $query = "INSERT INTO product_type VALUES('','{$data['type']}','{$data['tax']}','{$data['img']}')";
                 mysqli_query($con, $query) or die(mysqli_error($con));
                 $datareturn['status'] = 1;
                 $datareturn['key'] = mysqli_insert_id($con);
                 // Successful saved
             } else {
-                $query = "UPDATE product_type set `type` = '{$data['type']}', `tax` = '{$data['tax']}' WHERE id = '{$data['id']}'";
+                $query = "UPDATE product_type set `type` = '{$data['type']}', `tax` = '{$data['tax']}', `img` = '{$data['img']}' WHERE id = '{$data['id']}'";
                 mysqli_query($con, $query) or die(mysqli_error($con));
                 $datareturn['status'] = 1;
                 $datareturn['key'] = $data['id'];
@@ -93,7 +93,7 @@ class TypeProduct extends Connection
         foreach ($results as $res)
         {
             $listyps .= '<tr>
-                          <th scope="row"><div class="text-center">'.$res['id'].'</div></th>
+                          <td><img height="40px" class="img mx-auto d-block" onerror="this.onerror=null; this.src=\'https://www.contentviewspro.com/wp-content/uploads/2017/07/default_image.png\'" src="'.$res['img'].'"></td>
                           <td>'.$res['type'].'</td>
                           <td><div class="text-center">'.$res['tax'].'%</div></td>
                           <td>
@@ -111,7 +111,7 @@ class TypeProduct extends Connection
         $registers = '<table class="table table-bordered mw-100">
                           <thead>
                             <tr>
-                              <th scope="col"><div class="text-center">Id</div></th>
+                              <th scope="col"><div class="text-center">Img</div></th>
                               <th scope="col"><div class="text-center">Type</div></th>
                               <th scope="col"><div class="text-center">Tax</div></th>
                               <th scope="col"><div class="text-center">Action</div></th>
@@ -133,6 +133,13 @@ class TypeProduct extends Connection
     {
         $db = new Connection();
         $con = $db->getConnection();
+
+        $query = "SELECT * FROM product WHERE type_id = ".$key.";";
+        $result = mysqli_query($con, $query) or die(mysqli_error($con));
+        if (mysqli_num_rows($result) >= 1) {
+            header("Location: /app/view/front.php?class=TypeProduct&status=havchi&key=".$key);
+        }
+
         $query = "DELETE FROM product_type WHERE id = ".$key.";";
         $results = mysqli_query($con, $query) or die(mysqli_error($con));
         header("Location: /app/view/front.php?class=TypeProductList");

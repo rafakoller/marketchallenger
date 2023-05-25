@@ -60,12 +60,14 @@ class ProductForm extends Product
             $type_id = $data['obj']['type_id'];
             $cost = $data['obj']['cost'];
             $profit = $data['obj']['profit'];
+            $img = $data['obj']['img'];
         } else {
             $inputid = '';
             $name = '';
             $type_id = '';
             $cost = '';
             $profit = '';
+            $img = '';
         }
 
         // load modal and show up if necessaryy
@@ -78,6 +80,15 @@ class ProductForm extends Product
         {
             $selected = ($type_id == $tp['id'])?' selected':'';
             $options_type .= '<option value="'.$tp['id'].'"'.$selected.'>'.$tp['type'].'</option>';
+        }
+
+        // load image
+        $showimg = '';
+        if ($img != '')
+        {
+            $showimg = '<div class="mb-3">
+                            <img class="img-thumbnail rounded mx-auto d-block" src="'.$img.'">
+                        </div>';
         }
 
         // make a HTML data to return
@@ -99,6 +110,7 @@ class ProductForm extends Product
                                          &nbsp;
                                         </div>
                                         <div class="col-12 col-md-6 mb-2">
+                                           '.$showimg.'
                                            '.$inputid.'
                                             <div class="mb-3">
                                                 <label class="form-label" for="name">Name: </label>
@@ -117,6 +129,10 @@ class ProductForm extends Product
                                             <div class="mb-3">
                                                 <label class="form-label" for="profit">Profit: </label>
                                                 <input class="form-control" type="number" step="0.01" name="profit" id="profit" required value="'.$profit.'">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label" for="img">Image URL: </label>
+                                                <input class="form-control" type="text" name="img" id="img" required value="'.$img.'">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-3">

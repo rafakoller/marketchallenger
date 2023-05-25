@@ -96,13 +96,13 @@ class Stock extends Connection
         {
             $vazio = false;
             $product = Product::getObj($res['product_id']);
-            $btnsell = ($res['stock']<=0)?'':'<a href="front.php?class=Sell&status=del&key='.$res['id'].'" title="Sell"><i class="fa fa-sign-out text-danger text-center" aria-hidden="true"></i></a>';
+            $btnsell = ($res['stock']<=0)?'':'<a href="front.php?class=Sell&status=sell&key='.$res['id'].'" title="Sell"><i class="fa fa-sign-out text-danger text-center" aria-hidden="true"></i></a>';
             $listyps .= '<tr>
                           <th scope="row">'.$product['name'].'</th>
                           <td>'.$res['stock'].'</td>
                           <td><div class="row">
                                     <div class="col-6 text-center">
-                                        <a href="front.php?class=Purchase&key='.$res['id'].'" title="Purchase"><i class="fa fa-sign-in text-center" aria-hidden="true"></i></a>
+                                        <a href="front.php?class=Purchase&status=5&key='.$res['product_id'].'" title="Purchase"><i class="fa fa-sign-in text-center" aria-hidden="true"></i></a>
                                     </div>
                                     <div class="col-6 text-center"> 
                                         '.$btnsell.'
@@ -131,6 +131,22 @@ class Stock extends Connection
                         </table> ';
 
         return $registers;
+    }
+
+    /**
+     * Update object
+     * @return void
+     */
+    public static function updateStock($operation,$qnt,$product_id)
+    {
+        $db = new Connection();
+        $con = $db->getConnection();
+        if ($operation == 'set') {
+            $querya = "UPDATE `stock` a SET a.stock = " . $qnt . " WHERE a.product_id = " . $product_id . ";";
+        } else {
+            $querya = "UPDATE `stock` a SET a.stock = (a.stock " . $operation . " " . $qnt . ") WHERE a.product_id = " . $product_id . ";";
+        }
+        mysqli_query($con, $querya) or die(mysqli_error($con));
     }
 
     /**

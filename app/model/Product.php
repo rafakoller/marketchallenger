@@ -31,13 +31,18 @@ class Product extends Connection
             // object already exist
         } else {
             if (!isset($data['id'])) {
-                $query = "INSERT INTO product VALUES('','{$data['name']}','{$data['type_id']}','{$data['cost']}','{$data['profit']}')";
+                $query = "INSERT INTO product VALUES('','{$data['name']}','{$data['type_id']}','{$data['cost']}','{$data['profit']}','{$data['img']}')";
                 mysqli_query($con, $query) or die(mysqli_error($con));
                 $datareturn['status'] = 1;
                 $datareturn['key'] = mysqli_insert_id($con);
+
+                // create a stock
+                $querya = "INSERT INTO stock VALUES('','{$datareturn['key']}',0);";
+                mysqli_query($con, $querya) or die(mysqli_error($con));
+
                 // Successful saved
             } else {
-                $query = "UPDATE product set `name` = '{$data['name']}', `type_id` = '{$data['type_id']}', `cost` = '{$data['cost']}', `profit` = '{$data['profit']}' WHERE id = '{$data['id']}'";
+                $query = "UPDATE product set `name` = '{$data['name']}', `type_id` = '{$data['type_id']}', `cost` = '{$data['cost']}', `profit` = '{$data['profit']}', `img` = '{$data['img']}' WHERE id = '{$data['id']}'";
                 mysqli_query($con, $query) or die(mysqli_error($con));
                 $datareturn['status'] = 1;
                 $datareturn['key'] = $data['id'];
@@ -73,8 +78,7 @@ class Product extends Connection
         $con = $db->getConnection();
         $query = "SELECT * FROM product ORDER BY `name`;";
         $result = mysqli_query($con, $query) or die(mysqli_error($con));
-        $row = mysqli_fetch_assoc($result);
-        return $row;
+        return $result;
     }
 
     /**
@@ -99,23 +103,24 @@ class Product extends Connection
             $valprof = ($res['cost']/100)*$res['profit'];
             $valtax = (($res['cost']+$valprof)/100)*$type['tax'];
             $price= number_format(($res['cost'] + $valtax + $valprof),2,'.','');
-            $listyps .= '<tr>
-                          <th scope="row"><div class="text-center">'.$res['id'].'</div></th>
+            $listyps .= '<tr data-toggle="tooltip" data-placement="top" title="'.$type['type'].' - '.$res['name'].'">
+                          <td><img height="40px" class="img mx-auto d-block" onerror="this.onerror=null; this.src=\'https://www.contentviewspro.com/wp-content/uploads/2017/07/default_image.png\'" src="'.$res['img'].'"></td>
                           <td>'.$res['name'].'</td>
                           <td>'.$type['type'].'</td>
                           <td><div class="text-center">$'.$res['cost'].'</div></td>
                           <td><div class="text-center">'.$res['profit'].'% <small>($'.number_format($valprof,2,'.','').')</small></div></td>
                           <td><div class="text-center">'.$type['tax'].'% <small>($'.number_format($valtax,2,'.','').')</small></div></td>
                           <td><div class="text-center">$'.$price.'</div></td>
-                          <td><div class="row">
-                                    <div class="col-6 text-center">
-                                        <a href="front.php?class=Product&key='.$res['id'].'" title="Edit"><i class="fa fa-pencil-square-o text-center" aria-hidden="true"></i></a>
-                                    </div>
-                                    <div class="col-6 text-center"> 
-                                        <a href="front.php?class=Product&status=del&key='.$res['id'].'" title="Delete"><i class="fa fa-trash text-danger text-center" aria-hidden="true"></i></a>
-                                    </div>
+                          <td>
+                            <div class="row">
+                                <div class="col-6 text-center">
+                                    <a href="front.php?class=Product&key='.$res['id'].'" title="Edit"><i class="fa fa-pencil-square-o text-center" aria-hidden="true"></i></a>
                                 </div>
-                            </td>
+                                <div class="col-6 text-center"> 
+                                    <a href="front.php?class=Product&status=del&key='.$res['id'].'" title="Delete"><i class="fa fa-trash text-danger text-center" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                          </td>
                         </tr>';
         }
         if ($vazio)
@@ -127,7 +132,7 @@ class Product extends Connection
         $registers = '<table class="table table-bordered mw-100">
                           <thead>
                             <tr>
-                              <th scope="col"><div class="text-center">Id</div></th>
+                              <th scope="col"><div class="text-center">Img</div></th>
                               <th scope="col"><div class="text-center">Name</div></th>
                               <th scope="col"><div class="text-center">Type</div></th>
                               <th scope="col"><div class="text-center">Cost</div></th>
@@ -155,6 +160,8 @@ class Product extends Connection
         $con = $db->getConnection();
         $query = "DELETE FROM product WHERE id = ".$key.";";
         $results = mysqli_query($con, $query) or die(mysqli_error($con));
+        $querya = "DELETE FROM stock WHERE product_id = ".$key.";";
+        $results = mysqli_query($con, $querya) or die(mysqli_error($con));
         header("Location: /app/view/front.php?class=ProductList");
     }
 

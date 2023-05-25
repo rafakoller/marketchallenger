@@ -16,6 +16,9 @@ include '../controler/OrderForm.php';
 include '../model/TypeProduct.php';
 include '../controler/TypeProductList.php';
 include '../controler/TypeProductForm.php';
+include '../model/Purchase.php';
+include '../controler/PurchaseList.php';
+include '../controler/PurchaseForm.php';
 include '../controler/UserView.php';
 include '../controler/ErrorView.php';
 
@@ -57,7 +60,7 @@ if (isset($_GET['class']) && !empty($_GET['class'])) {
     } else {
 
         // point to class form wen object is set
-        $reclass = (isset($data['obj']) || $data['status']==10)?$_GET['class'].'Form':$_GET['class'];
+        $reclass = (isset($data['obj']) || $data['status']==10 || $data['status']=='5')?$_GET['class'].'Form':$_GET['class'];
         $class = new $reclass();
 
         // consult if is a post or not to redirect to rigth place

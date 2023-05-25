@@ -80,14 +80,99 @@ class OrderForm extends Order
             $options_type .= '<option value="'.$tp['id'].'"'.$selected.'>'.$tp['type'].'</option>';
         }
 
+        $jscript = '<script>
+                        $("#recipeCarousel").carousel({
+                          interval: 10000
+                        })
+                        $(".carousel .carousel-item").each(function(){
+                            var minPerSlide = 3;
+                            var next = $(this).next();
+                            if (!next.length) {
+                                next = $(this).siblings(":first");
+                            }
+                            next.children(":first-child").clone().appendTo($(this));
+                        
+                            for (var i=0;i<minPerSlide;i++) {
+                                next=next.next();
+                                if (!next.length) {
+                                    next = $(this).siblings(":first");
+                                }
+                                next.children(":first-child").clone().appendTo($(this));
+                            }
+                        });
+                    </script>';
+
         // make a HTML data to return
-        $this->dataclass = $alert.$modal.
+        $this->dataclass = $jscript.$alert.$modal.
                             '<div class="row flex-between-center mb-4 g-3">
                                 <form class="p-3 row" action="front.php?class='.self::CLASSLINK.'" method="post" autocomplete="off">
                                     <div class="col-8 bg-light rounded-4 border border-secondary">
                                         <!-- Type Products  card overflow-hidden shadow -->
                                         <div class="col-12 bg-light rounded-4 border border-secondary">
-                                            &nbsp;
+                                            <div class="container text-center my-3">
+                                                <div class="row mx-auto my-auto">
+                                                    <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
+                                                        <div class="carousel-inner w-100" role="listbox">
+                                                            <div class="carousel-item active">
+                                                                <div class="col-md-4">
+                                                                    <div class="card card-body">
+                                                                        <div class="row">
+                                                                            <img height="100px" class="img mx-auto d-block" src="http://placehold.it/380?text=1">
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <h4>Fruit</h4>
+                                                                            <span>8 Products</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="carousel-item">
+                                                                <div class="col-md-4">
+                                                                    <div class="card card-body">
+                                                                        <img class="img-fluid" src="http://placehold.it/380?text=2">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="carousel-item">
+                                                                <div class="col-md-4">
+                                                                    <div class="card card-body">
+                                                                        <img class="img-fluid" src="http://placehold.it/380?text=3">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="carousel-item">
+                                                                <div class="col-md-4">
+                                                                    <div class="card card-body">
+                                                                        <img class="img-fluid" src="http://placehold.it/380?text=4">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="carousel-item">
+                                                                <div class="col-md-4">
+                                                                    <div class="card card-body">
+                                                                        <img class="img-fluid" src="http://placehold.it/380?text=5">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="carousel-item">
+                                                                <div class="col-md-4">
+                                                                    <div class="card card-body">
+                                                                        <img class="img-fluid" src="http://placehold.it/380?text=6">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <a class="carousel-control-prev w-auto" href="#recipeCarousel" role="button" data-slide="prev">
+                                                            <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
+                                                            <span class="sr-only">Previous</span>
+                                                        </a>
+                                                        <a class="carousel-control-next w-auto" href="#recipeCarousel" role="button" data-slide="next">
+                                                            <span class="carousel-control-next-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
+                                                            <span class="sr-only">Next</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <!-- Products  -->
                                         <div class="col-12 bg-light rounded-4 border border-secondary">

@@ -38,4 +38,19 @@ class User extends Connection {
             }
         }
     }
+
+    /**
+     * Get a Object
+     * @param $id
+     * @return array
+     */
+    public static function getObj($id)
+    {
+        $db = new Connection();
+        $con = $db->getConnection();
+        $query = "SELECT * FROM `user` WHERE id = '{$id}';";
+        $result = mysqli_query($con, $query) or die(mysqli_error($con));
+        $row = mysqli_fetch_assoc($result);
+        return $row;
+    }
 }

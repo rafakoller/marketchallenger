@@ -25,11 +25,11 @@ class Helper extends Connection
         $dataclass = '<script>
                             $(document).ready(
                                 function(){
-                                    $("#confirmDelete").modal("toggle");
+                                    $("#'.$id_modal.'").modal("toggle");
                                 }
                             );
                             function closeModal(element) {
-                                $("#confirmDelete").modal("toggle");
+                                $("#'.$id_modal.'").modal("toggle");
                             }
                         </script>
                         <div class="modal fade" id="'.$id_modal.'" tabindex="-1" role="dialog" aria-labelledby="'.$id_modal.'" aria-hidden="true">
