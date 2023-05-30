@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../config/parameters..php';
+include '../config/parameters..php';
 date_default_timezone_set (TIMEZONE);
 if(!isset($_SESSION['id'])) {
     header("Location: ".DIRSYS."/app/view/login.php");
@@ -98,7 +98,7 @@ if (isset($_GET['class']) && !empty($_GET['class'])) {
 }
 
 $menu_replace =  str_replace("{usuario}",$_SESSION['firstname'],$menu);
-$menu_replace =  str_replace("{dirsys}",DIRSYS,$menu);
+$menu_replace =  str_replace("{dirsys}",self::DIRSYS,$menu);
 
 // change container size to POS
 $containerclass = (isset($data['class']) && $data['class'] == 'OrderForm')? 'col-12' : 'container';
