@@ -1,5 +1,6 @@
 <?php
 session_start();
+include 'app/config/parameters..php';
 if(isset($_SESSION['id'])) {
     header("Location: ".DIRSYS."/app/view/front.php");
 } else {
