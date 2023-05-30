@@ -153,12 +153,12 @@ class TypeProduct extends Connection
         $query = "SELECT * FROM product WHERE type_id = ".$key.";";
         $result = mysqli_query($con, $query) or die(mysqli_error($con));
         if (mysqli_num_rows($result) >= 1) {
-            header("Location: /app/view/front.php?class=TypeProduct&status=havchi&key=".$key);
+            header("Location: ".DIRSYS."/app/view/front.php?class=TypeProduct&status=havchi&key=".$key);
         }
 
         $query = "DELETE FROM product_type WHERE id = ".$key.";";
         $results = mysqli_query($con, $query) or die(mysqli_error($con));
-        header("Location: /app/view/front.php?class=TypeProductList");
+        header("Location: ".DIRSYS."/app/view/front.php?class=TypeProductList");
     }
 
 

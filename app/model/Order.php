@@ -18,7 +18,7 @@ class Order extends Connection
     {
         if (isset($data['status']) && $data['status'] == 'sell')
         {
-            header("Location: /app/view/front.php?class=OrderForm&qnt=1&prod=".$data['prod']);
+            header("Location: ".DIRSYS."/app/view/front.php?class=OrderForm&qnt=1&prod=".$data['prod']);
         } else {
             $this->deleteObj($data['key']);
         }
@@ -215,7 +215,7 @@ class Order extends Connection
         // delete order
         $query = "DELETE FROM `order` WHERE id = ".$order_id.";";
         mysqli_query($con, $query) or die(mysqli_error($con));
-        header("Location: /app/view/front.php?class=OrderList");
+        header("Location: ".DIRSYS."/app/view/front.php?class=OrderList");
     }
 
 }

@@ -192,7 +192,7 @@ class Stock extends Connection
         $con = $db->getConnection();
         $query = "DELETE FROM stock WHERE id = ".$key.";";
         $results = mysqli_query($con, $query) or die(mysqli_error($con));
-        header("Location: /app/view/front.php?class=StockList");
+        header("Location: ".DIRSYS."/app/view/front.php?class=StockList");
     }
 
 

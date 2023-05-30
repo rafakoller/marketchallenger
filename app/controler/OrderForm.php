@@ -24,7 +24,7 @@ class OrderForm extends Order
 
         // if from POS, rewrite class
         if (isset($data['status']) && $data['status'] == 'sale') {
-            header("Location: /app/view/front.php?class=OrderForm");
+            header("Location: ".DIRSYS."/app/view/front.php?class=OrderForm");
         }
 
         if (isset($data['prod']) && isset($data['qnt']))
@@ -78,7 +78,7 @@ class OrderForm extends Order
             {
                 $_SESSION['pos'][$data['prod']]['qnt'] = $_SESSION['pos'][$data['prod']]['qnt'] + 1;
             }
-            header("Location: /app/view/front.php?class=OrderForm");
+            header("Location: ".DIRSYS."/app/view/front.php?class=OrderForm");
         }
 
         $types = TypeProduct::getRegistersPaginated(4,$pagecurr);

@@ -59,6 +59,6 @@ class OrderProduct extends Order
 //
 //        $query = "DELETE FROM order_products WHERE product_id = {$product_id} AND order_id = {$order_id};";
 //        $results = mysqli_query($con, $query) or die(mysqli_error($con));
-//        header("Location: /app/view/front.php?class=OrderList");
+//        header("Location: ".DIRSYS."/app/view/front.php?class=OrderList");
 //    }
 }

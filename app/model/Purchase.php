@@ -155,9 +155,9 @@ class Purchase extends Connection
             // remove purchase
             $query = "DELETE FROM `purchase` WHERE id = ".$key.";";
             $results = mysqli_query($con, $query) or die(mysqli_error($con));
-            header("Location: /app/view/front.php?class=PurchaseList");
+            header("Location: ".DIRSYS."/app/view/front.php?class=PurchaseList");
         } else {
-            header("Location: /app/view/front.php?class=Purchase&status=oos&key=".$key);
+            header("Location: ".DIRSYS."/app/view/front.php?class=Purchase&status=oos&key=".$key);
         }
     }
 

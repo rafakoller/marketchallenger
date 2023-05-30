@@ -94,7 +94,7 @@ if(isset($_POST['submit'])) {
         <?php
         if ($result == 1){
         ?>
-          $(document).ready(function(){setTimeout(() => {$('#successful').slideToggle('slow');window.location.replace("/app/view/login.php");}, 6000);});
+          $(document).ready(function(){setTimeout(() => {$('#successful').slideToggle('slow');window.location.replace(<?= DIRSYS ?>"/app/view/login.php");}, 6000);});
         <?php
         } else if ($result == 10){
         ?>

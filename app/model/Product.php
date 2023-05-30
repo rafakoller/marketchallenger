@@ -189,7 +189,7 @@ class Product extends Connection
         $results = mysqli_query($con, $query) or die(mysqli_error($con));
         $querya = "DELETE FROM stock WHERE product_id = ".$key.";";
         $results = mysqli_query($con, $querya) or die(mysqli_error($con));
-        header("Location: /app/view/front.php?class=ProductList");
+        header("Location: ".DIRSYS."/app/view/front.php?class=ProductList");
     }
 
 
