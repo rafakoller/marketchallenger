@@ -23,7 +23,7 @@ class Login extends Connection {
         $db = new Connection();
         $con = $db->getConnection();
 
-        $query = "SELECT * FROM user WHERE username = '$username';";
+        $query = "SELECT * FROM user WHERE username = '$username' AND status = 1;";
         $result = mysqli_query($con, $query) or die(mysqli_error($con));
         $row = mysqli_fetch_assoc($result);
 
@@ -42,7 +42,7 @@ class Login extends Connection {
             }
         } else {
             return 100;
-            // User not registered
+            // User not registered or Inactive
         }
     }
 

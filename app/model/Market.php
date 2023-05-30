@@ -51,12 +51,17 @@ class Market extends Connection {
     }
 
     /**
-     * Get amount of Orders
+     * Get value of products cost in Stock
      * @return integer
      */
-    public function getAmountOrders()
+    public function getStockValue()
     {
-        return 47;
+        $db = new Connection();
+        $con = $db->getConnection();
+        $query = "SELECT SUM(a.stock * b.cost) as total FROM stock a LEFT JOIN product b ON a.product_id = b.id;";
+        $result = mysqli_query($con, $query) or die(mysqli_error($con));
+        $row = mysqli_fetch_assoc($result);
+        return number_format($row['total'],2,'.',',');
     }
 
     /**
@@ -65,7 +70,19 @@ class Market extends Connection {
      */
     public function getLastMonthOrders()
     {
-        $orders = ['01' => 12, '02' => 18, '03' => 13, '04' => 10, '05' => 17, '06' => 16, '07' => 17, '08' => 14, '09' => 16, '10' => 9, '11' => 9, '12' => 10, '13' => 6, '14' => 10, '15' => 13, '16' => 16, '17' => 19,'18' => 22,'19' => 18,'20' => 15,'21' => 16,'22' => 15,'23' => 14,'24' => 10,'25' => 9,'26' => 16,'27' => 15,'28' => 16,'29' => 16,'30' => 18];
+        $db = new Connection();
+        $con = $db->getConnection();
+        $query = "select SUM(invoicing) as invoicing, COUNT(qnt) as qnt, date, day from (SELECT SUM((b.valtax * b.qnt) + (b.valprod * b.qnt)) as invoicing, COUNT(a.user_id) as qnt, date(a.created_at) as `date`, day(a.created_at) as `day` FROM `order` a LEFT JOIN order_products b ON a.id = b.order_id  AND a.created_at >= (CURDATE( ) - INTERVAL 30 DAY) GROUP BY a.id, date(a.created_at) ORDER BY a.created_at asc) as ordered group by date order by date asc;";
+        $results = mysqli_query($con, $query) or die(mysqli_error($con));
+        $orders = [];
+        foreach ($results as $res)
+        {
+            $orders[] =  [
+                            'day' => $res['day'],
+                            'qnt' => $res['qnt'],
+                            'invoicing' => number_format($res['invoicing'],2,'.','')
+                        ];
+        }
         return $orders;
     }
 
@@ -75,85 +92,38 @@ class Market extends Connection {
      */
     public function getTopSelMonthProducts()
     {
-        $products = [
-            [
-                'Product' => 'Tomatoes',
-                'Price' => 6.88,
-                'Proportion' => "78/100"
-            ],[
-                'Product' => 'Chicken',
-                'Price' => 16.32,
-                'Proportion' => "76/100"
-            ],[
-                'Product' => 'Whey Protein',
-                'Price' => 55.18,
-                'Proportion' => "74/100"
-            ],[
-                'Product' => 'Integral Rice',
-                'Price' => 1.82,
-                'Proportion' => "73/100"
-            ],[
-                'Product' => 'Sugar',
-                'Price' => 1.28,
-                'Proportion' => "73/100"
-            ],[
-                'Product' => 'Flavor',
-                'Price' => 2.04,
-                'Proportion' => "72/100"
-            ],[
-                'Product' => 'Whiskey',
-                'Price' => 5.87,
-                'Proportion' => "70/100"
-            ],[
-                'Product' => 'Cookies',
-                'Price' => 0.88,
-                'Proportion' => "69/100"
-            ],[
-                'Product' => 'Coca-Cola',
-                'Price' => 3.08,
-                'Proportion' => "66/100"
-            ],[
-                'Product' => 'Milk',
-                'Price' => 2.56,
-                'Proportion' => "65/100"
-            ]];
+        $db = new Connection();
+        $con = $db->getConnection();
+        $query = "SELECT a.name, a.profit, b.product_id, b.valprod, b.valtax, SUM(b.qnt) as total FROM product a JOIN order_products b ON a.id = b.product_id JOIN `order` c ON b.order_id = c.id AND c.created_at >= (CURDATE( ) - INTERVAL 10 DAY) GROUP BY a.name ORDER BY total DESC LIMIT 10;";
+        $result = mysqli_query($con, $query) or die(mysqli_error($con));
+        $products = [];
+        foreach ($result as $res)
+        {
+            $percent = ($res['valtax'] / $res['valprod']) * 100;
+            $products[] = [
+                'Product' => $res['name'],
+                'Price/Tax' => '$'.number_format($res['valprod']+$res['valtax'],2,'.',',').'  ('.number_format($percent,2,'.',',').'%)',
+                'Profit' => $res['profit'].'%',
+                'Quantity' => $res['total']
+            ];
+        }
         return $products;
     }
 
     /**
-     * Get amount of Cash
+     * Get Price compose of products
      * @return integer
      */
-    public function getAmountCash()
+    public function getPriceCompose()
     {
-        return 7452.86;
-    }
-
-    /**
-     * Get amount of Tax
-     * @return integer
-     */
-    public function getAmountTax()
-    {
-        return 1037.24;
-    }
-
-    /**
-     * Get amount of Cost
-     * @return integer
-     */
-    public function getAmountCost()
-    {
-        return 3468.45;
-    }
-
-    /**
-     * Get amount of Profit
-     * @return integer
-     */
-    public function getAmountProfit()
-    {
-        return 2947.17;
+        $db = new Connection();
+        $con = $db->getConnection();
+        $query = "SELECT SUM(a.cost) as costed, SUM((a.cost / 100) * a.profit) as profited, SUM(((a.cost + ((a.cost / 100) * a.profit)) / 100) * b.tax) as taxed FROM product a LEFT JOIN product_type b ON a.type_id = b.id;";
+        $results = mysqli_query($con, $query) or die(mysqli_error($con));
+        $count = mysqli_num_rows($results);
+        $row = mysqli_fetch_assoc($results);
+        $row['count'] = $count;
+        return $row;
     }
 
 }

@@ -20,7 +20,7 @@ class ProductList extends Product
         }
 
         $registers = $this->getRegisters(self::LIMITE,$pagecurr);
-        $pagination = $this->helper::getPagination(self::LIMITE,$pagecurr,'product');
+        $pagination = $this->helper::getPagination(self::LIMITE,$pagecurr,'product','ProductList');
 
         $this->dataclass = '<div class="pb-5">
                                 <div class="row g-4">

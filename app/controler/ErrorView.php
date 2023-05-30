@@ -10,7 +10,7 @@ class ErrorView
 
     public $dataclass;
 
-    public function getData($action = null)
+    public function getData($data = null)
     {
         $this->dataclass = '<div class="pb-5">
                                 <div class="row g-4">

@@ -68,8 +68,7 @@ class Product extends Connection
     }
 
     /**
-     * Get a Objects
-     * @param $id
+     * Get an Objects
      * @return array
      */
     public static function getObjs()
@@ -79,6 +78,34 @@ class Product extends Connection
         $query = "SELECT * FROM product ORDER BY `name`;";
         $result = mysqli_query($con, $query) or die(mysqli_error($con));
         return $result;
+    }
+
+    /**
+     * Get an Objects by Type
+     * @param $type_id
+     * @return array
+     */
+    public static function getObjsByType($type_id)
+    {
+        $db = new Connection();
+        $con = $db->getConnection();
+        $query = "SELECT * FROM product WHERE type_id = '{$type_id}' ORDER BY `name`;";
+        $result = mysqli_query($con, $query) or die(mysqli_error($con));
+        return $result;
+    }
+
+    /**
+     * Get a Qnt Objects by Type
+     * @param $type_id
+     * @return array
+     */
+    public static function getQntObjsByType($type_id)
+    {
+        $db = new Connection();
+        $con = $db->getConnection();
+        $query = "SELECT a.* FROM product a JOIN stock b on b.product_id = a.id AND b.stock > 0 AND a.type_id = '{$type_id}' ORDER BY a.`name`;";
+        $result = mysqli_query($con, $query) or die(mysqli_error($con));
+        return mysqli_num_rows($result);
     }
 
     /**
@@ -102,15 +129,15 @@ class Product extends Connection
             $type = TypeProduct::getObj($res['type_id']);
             $valprof = ($res['cost']/100)*$res['profit'];
             $valtax = (($res['cost']+$valprof)/100)*$type['tax'];
-            $price= number_format(($res['cost'] + $valtax + $valprof),2,'.','');
+            $price= ($res['cost'] + $valtax + $valprof);
             $listyps .= '<tr data-toggle="tooltip" data-placement="top" title="'.$type['type'].' - '.$res['name'].'">
                           <td><img height="40px" class="img mx-auto d-block" onerror="this.onerror=null; this.src=\'https://www.contentviewspro.com/wp-content/uploads/2017/07/default_image.png\'" src="'.$res['img'].'"></td>
                           <td>'.$res['name'].'</td>
                           <td>'.$type['type'].'</td>
                           <td><div class="text-center">$'.$res['cost'].'</div></td>
-                          <td><div class="text-center">'.$res['profit'].'% <small>($'.number_format($valprof,2,'.','').')</small></div></td>
-                          <td><div class="text-center">'.$type['tax'].'% <small>($'.number_format($valtax,2,'.','').')</small></div></td>
-                          <td><div class="text-center">$'.$price.'</div></td>
+                          <td><div class="text-center">'.$res['profit'].'% <small>($'.number_format($valprof,2,'.',',').')</small></div></td>
+                          <td><div class="text-center">'.$type['tax'].'% <small>($'.number_format($valtax,2,'.',',').')</small></div></td>
+                          <td><div class="text-center">$'.number_format($price,2,'.',',').'</div></td>
                           <td>
                             <div class="row">
                                 <div class="col-6 text-center">
@@ -137,7 +164,7 @@ class Product extends Connection
                               <th scope="col"><div class="text-center">Type</div></th>
                               <th scope="col"><div class="text-center">Cost</div></th>
                               <th scope="col"><div class="text-center">Profit</div></th>
-                              <th scope="col"><div class="text-center">Tax</div></th>
+                              <th scope="col"><div class="text-center">Tax Type</div></th>
                               <th scope="col"><div class="text-center">Price to Sell</div></th>
                               <th scope="col"><div class="text-center">Action</div></th>
                             </tr>

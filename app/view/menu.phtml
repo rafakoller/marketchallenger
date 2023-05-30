@@ -1,45 +1,48 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm ">
+<nav class="noPrint navbar navbar-expand-lg bg-body-tertiary shadow-sm sticky-top" style="z-index: 1025;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Market Challenger</a>
+        <a class="navbar-brand" href="#" onclick="$(\'#containerload\').show();">Market Challenger</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link {HomeView}" aria-current="page" href="/app/view/front.php?class=HomeView">Home</a>
+                    <a class="nav-link {HomeView}" onclick="$(\'#containerload\').show();" aria-current="page" href="/app/view/front.php?class=HomeView">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {UserList}" onclick="$(\'#containerload\').show();" aria-current="page" href="/app/view/front.php?class=UserList">Users</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" onclick="$(\'#containerload\').show();" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Catalogs
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item {ProductList}" href="/app/view/front.php?class=ProductList">Products</a></li>
-                        <li><a class="dropdown-item {TypeProductList}" href="/app/view/front.php?class=TypeProductList">Type Products</a></li>
+                        <li><a class="dropdown-item {ProductList}" onclick="$(\'#containerload\').show();" href="/app/view/front.php?class=ProductList">Products</a></li>
+                        <li><a class="dropdown-item {TypeProductList}" onclick="$(\'#containerload\').show();" href="/app/view/front.php?class=TypeProductList">Type Products</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {StockList}" href="/app/view/front.php?class=StockList">Stock</a>
+                    <a class="nav-link {StockList}" onclick="$(\'#containerload\').show();" href="/app/view/front.php?class=StockList">Stock</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {PurchaseList}" href="/app/view/front.php?class=PurchaseList">Purchases</a>
+                    <a class="nav-link {PurchaseList}" onclick="$(\'#containerload\').show();" href="/app/view/front.php?class=PurchaseList">Purchases</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {SaleList}" href="/app/view/front.php?class=OrderList">Order</a>
+                    <a class="nav-link {SaleList}" onclick="$(\'#containerload\').show();" href="/app/view/front.php?class=OrderList">Order</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {SaleForm}" href="/app/view/front.php?class=OrderForm">POS</a>
+                    <a class="nav-link {SaleForm}" onclick="$(\'#containerload\').show();" href="/app/view/front.php?class=OrderForm">POS</a>
                 </li>
             </ul>
             <ul class="navbar-nav mb-2 mb-lg-0 d-flex">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" onclick="$(\'#containerload\').show();" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-user-circle" aria-hidden="true"></i>
                         {usuario}
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/app/view/front.php?class=UserView">Profile</a></li>
-                        <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                        <li><a class="dropdown-item" onclick="$(\'#containerload\').show();" href="/app/view/front.php?class=UserView">Profile</a></li>
+                        <li><a class="dropdown-item" onclick="$(\'#containerload\').show();" href="logout.php">Logout</a></li>
                     </ul>
                 </li>
             </ul>

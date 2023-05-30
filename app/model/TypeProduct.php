@@ -126,6 +126,22 @@ class TypeProduct extends Connection
     }
 
     /**
+     * Get an Obj paginated
+     * @param $limite
+     * @param $pagecurr
+     * @return array
+     */
+    public static function getRegistersPaginated($limite,$pagecurr)
+    {
+        $offset = ($pagecurr == 1 || $pagecurr == 0)?0:($pagecurr - 1)*$limite;
+        $db = new Connection();
+        $con = $db->getConnection();
+        $query = "SELECT * FROM `product_type` ORDER BY `type` ASC  LIMIT ".$limite."  OFFSET ".$offset.";";
+        $results = mysqli_query($con, $query) or die(mysqli_error($con));
+        return $results;
+    }
+
+    /**
      * Delete Object
      * @param $key
      */

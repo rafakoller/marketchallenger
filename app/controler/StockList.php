@@ -22,7 +22,7 @@ class StockList extends Stock
         }
 
         $registers = $this->getRegisters(self::LIMITE,$pagecurr);
-        $pagination = $this->helper::getPagination(self::LIMITE,$pagecurr,'stock');
+        $pagination = $this->helper::getPagination(self::LIMITE,$pagecurr,'stock','StockList');
 
         $this->dataclass = '<div class="pb-5">
                                 <div class="row g-4">

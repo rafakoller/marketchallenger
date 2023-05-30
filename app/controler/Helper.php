@@ -59,9 +59,10 @@ class Helper extends Connection
      * @param $limite
      * @param $pagecurr
      * @param $table
+     * @param $class
      * @return string|void
      */
-    public static function getPagination($limite,$pagecurr,$table)
+    public static function getPagination($limite,$pagecurr,$table,$class)
     {
         $db = new Connection();
         $con = $db->getConnection();
@@ -74,19 +75,64 @@ class Helper extends Connection
         $next = (($pagecurr + 1) > $pages)?" disabled":"";
         $nenext = (($pagecurr + 2) > $pages)?" disabled":"";
 
-        $pagination = '<nav aria-label="Page navigation">
+        $pagination = '<nav>
                           <ul class="pagination justify-content-center">
                             <li class="page-item">
-                              <a class="page-link'.$previous.'" href="front.php?class=TypeProductList&page='.($pagecurr - 1).'" tabindex="-1">Previous</a>
+                              <a class="page-link'.$previous.'" href="front.php?class='.$class.'&page='.($pagecurr - 1).'" tabindex="-1">Previous</a>
                             </li>
-                            <li class="page-item"><a class="page-link" href="front.php?class=TypeProductList&page='.$pagecurr.'">'.$pagecurr.'</a></li>
-                            <li class="page-item'.$next.'"><a class="page-link" href="front.php?class=TypeProductList&page='.($pagecurr + 1).'">'.($pagecurr + 1).'</a></li>
-                            <li class="page-item'.$nenext.'"><a class="page-link" href="front.php?class=TypeProductList&page='.($pagecurr + 2).'">'.($pagecurr + 2).'</a></li>
+                            <li class="page-item"><a class="page-link" href="front.php?class='.$class.'&page='.$pagecurr.'">'.$pagecurr.'</a></li>
+                            <li class="page-item'.$next.'"><a class="page-link" href="front.php?class='.$class.'&page='.($pagecurr + 1).'">'.($pagecurr + 1).'</a></li>
+                            <li class="page-item'.$nenext.'"><a class="page-link" href="front.php?class='.$class.'&page='.($pagecurr + 2).'">'.($pagecurr + 2).'</a></li>
                             <li class="page-item">
-                              <a class="page-link'.$next.'" href="front.php?class=TypeProductList&page='.($pagecurr + 1).'">Next</a>
+                              <a class="page-link'.$next.'" href="front.php?class='.$class.'&page='.($pagecurr + 1).'">Next</a>
                             </li>
                           </ul>
                         </nav>';
+
+        return $pagination;
+    }
+
+    /**
+     * Get a html Pagination
+     * @param $limite
+     * @param $pagecurr
+     * @param $table
+     * @param $class
+     * @return string|void
+     */
+    public static function getNavPOS($limite,$pagecurr,$table,$class)
+    {
+        $db = new Connection();
+        $con = $db->getConnection();
+        $querytot = "SELECT * FROM `".$table."` ORDER BY `id`;";
+        $resultstot = mysqli_query($con, $querytot) or die(mysqli_error($con));
+        $count = mysqli_num_rows($resultstot);
+        $pages = ceil(($count / $limite));
+
+        $previous = (($pagecurr - 1)<=0)?'role="link" aria-disabled="true"':'href="front.php?class='.$class.'&page='.($pagecurr - 1).'"';
+        $next = (($pagecurr + 1) > $pages)?'role="link" aria-disabled="true"':'href="front.php?class='.$class.'&page='.($pagecurr + 1).'"';
+
+        $optionspage = '';
+        for ($x=1;$x<=$pages;$x++)
+        {
+            $optionspage .= '<li class="page-item page-'.$x.'"><a class="page-link" href="front.php?class='.$class.'&page='.$x.'" onclick="$(\'#containerload\').show();">'.$x.'</a></li>';
+        }
+
+        $pagination = '<div class="row">
+                            <div class="col-2 text-center text-white">
+                                <a '.$previous.' onclick="$(\'#containerload\').show();"><i class="fa fa-backward fa-2x text-white" aria-hidden="true"></i></a>
+                            </div>
+                            <div class="col-8 text-center">
+                            <nav>
+                              <ul class="pagination pagination-lg justify-content-center">
+                                '.$optionspage.'
+                              </ul>
+                            </nav>
+                            </div>
+                            <div class="col-2 text-center text-white">
+                                <a '.$next.' onclick="$(\'#containerload\').show();"><i class="fa fa-forward fa-2x text-white" aria-hidden="true"></i></a>
+                            </div>
+                        </div>';
 
         return $pagination;
     }

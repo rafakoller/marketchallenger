@@ -63,6 +63,36 @@ class Stock extends Connection
     }
 
     /**
+     * Get stock from a Object
+     * @param $product_id
+     * @return array
+     */
+    public static function getStock($product_id)
+    {
+        $db = new Connection();
+        $con = $db->getConnection();
+        $query = "SELECT qnt FROM stock WHERE product_id = '{$product_id}';";
+        $result = mysqli_query($con, $query) or die(mysqli_error($con));
+        $row = mysqli_fetch_assoc($result);
+        return $row['qnt'];
+    }
+
+    /**
+     * Get a Object by product
+     * @param $product_id
+     * @return array
+     */
+    public static function getObjByProduct($product_id)
+    {
+        $db = new Connection();
+        $con = $db->getConnection();
+        $query = "SELECT * FROM stock WHERE product_id = '{$product_id}';";
+        $result = mysqli_query($con, $query) or die(mysqli_error($con));
+        $row = mysqli_fetch_assoc($result);
+        return $row;
+    }
+
+    /**
      * Get a Objects
      * @param $id
      * @return array
@@ -88,18 +118,20 @@ class Stock extends Connection
         $offset = ($pagecurr == 1 || $pagecurr == 0)?0:($pagecurr - 1)*$limite;
         $db = new Connection();
         $con = $db->getConnection();
-        $query = "SELECT a.*, b.name FROM stock a LEFT JOIN product b ON a.product_id = b.id ORDER BY b.name ASC  LIMIT ".$limite."  OFFSET ".$offset.";";
+        $query = "SELECT a.*, b.name, b.cost FROM stock a LEFT JOIN product b ON a.product_id = b.id ORDER BY b.name ASC  LIMIT ".$limite."  OFFSET ".$offset.";";
         $results = mysqli_query($con, $query) or die(mysqli_error($con));
         $listyps = '';
         $vazio = true;
         foreach ($results as $res)
         {
             $vazio = false;
-            $product = Product::getObj($res['product_id']);
-            $btnsell = ($res['stock']<=0)?'':'<a href="front.php?class=Sell&status=sell&key='.$res['id'].'" title="Sell"><i class="fa fa-sign-out text-danger text-center" aria-hidden="true"></i></a>';
+            $value = ($res['stock'] <=0 ) ? 0 : '$'.number_format(($res['stock'] * $res['cost']),2,'.',',');
+            #$product = Product::getObj($res['product_id']);
+            $btnsell = ($res['stock']<=0)?'':'<a href="front.php?class=Order&status=sell&prod='.$res['product_id'].'" title="Sell"><i class="fa fa-sign-out text-danger text-center" aria-hidden="true"></i></a>';
             $listyps .= '<tr>
-                          <th scope="row">'.$product['name'].'</th>
-                          <td>'.$res['stock'].'</td>
+                          <th scope="row">'.$res['name'].'</th>
+                          <td><div class="text-center">'.$res['stock'].'</div></td>
+                          <td><div class="text-center">'.$value.'</div></td>
                           <td><div class="row">
                                     <div class="col-6 text-center">
                                         <a href="front.php?class=Purchase&status=5&key='.$res['product_id'].'" title="Purchase"><i class="fa fa-sign-in text-center" aria-hidden="true"></i></a>
@@ -122,6 +154,7 @@ class Stock extends Connection
                             <tr>
                               <th scope="col"><div class="text-center">Product</div></th>
                               <th scope="col"><div class="text-center">Quantity</div></th>
+                              <th scope="col"><div class="text-center">Value</div></th>
                               <th scope="col"><div class="text-center">Actions</div></th>
                             </tr>
                           </thead>

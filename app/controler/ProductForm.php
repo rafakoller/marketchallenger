@@ -21,7 +21,7 @@ class ProductForm extends Product
         }
 
         $alert = '';
-        if ($data['status'] == 1) {
+        if (isset($data['status']) && $data['status'] == 1) {
             $alert = "<script> 
                             $(document).ready(
                                 function(){ 
@@ -35,7 +35,7 @@ class ProductForm extends Product
                                 }
                             );
                         </script>";
-        } else if ($data['status'] == 10) {
+        } else if (isset($data['status']) && $data['status'] == 10) {
             $alert = "<script> 
                             $(document).ready(
                                 function(){ 
@@ -51,7 +51,7 @@ class ProductForm extends Product
                        </script>";
         }
 
-        if ($data['key'] != null) {
+        if (isset($data['key']) && $data['key'] != null) {
             $inputid = '<div class="mb-3">
                         <label class="form-label" for="id">Id: </label>
                         <input class="form-control" type="text" name="id" id="id" value="'.$data['key'].'" readonly>

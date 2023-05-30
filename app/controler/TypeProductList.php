@@ -20,7 +20,7 @@ class TypeProductList extends TypeProduct
         }
 
         $registers = $this->getRegisters(self::LIMITE,$pagecurr);
-        $pagination = $this->helper::getPagination(self::LIMITE,$pagecurr,'product_type');
+        $pagination = $this->helper::getPagination(self::LIMITE,$pagecurr,'product_type','TypeProductList');
 
         $this->dataclass = '<div class="pb-5">
                                 <div class="row g-4">

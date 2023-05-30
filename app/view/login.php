@@ -1,6 +1,8 @@
 <?php
 session_start();
 require '../model/Login.php';
+require '../config/parameters..php';
+date_default_timezone_set (TIMEZONE);
 $login = new Login();
 $result = 0;
 if(isset($_SESSION['id'])) {
@@ -22,6 +24,7 @@ if(isset($_POST['submit'])) {
         $_SESSION['name'] = $login->nameUser();
         $_SESSION['firstname'] = $login->firstnameUser();
         $_SESSION['email'] = $login->emailUser();
+        $_SESSION['pos'] = [];
         header("Location: /index.php");
     } else if ($result == 10){
         echo "<script> $(document).ready(function(){ $('#wrongpass').slideDown('slow');}); </script>";
@@ -57,7 +60,7 @@ if(isset($_POST['submit'])) {
                             <div>Wrong Password!</div>
                         </div>
                         <div id="ukuser" class="alert alert-danger mb-6" role="alert" style="display: none;">
-                            <div>User not registered!</div>
+                            <div>User inactive or not registered!</div>
                         </div>
                     </div>
                     <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="float: right;">

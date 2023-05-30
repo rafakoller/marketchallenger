@@ -20,7 +20,7 @@ class PurchaseList extends Purchase
         }
 
         $registers = $this->getRegisters(self::LIMITE,$pagecurr);
-        $pagination = $this->helper::getPagination(self::LIMITE,$pagecurr,'purchase');
+        $pagination = $this->helper::getPagination(self::LIMITE,$pagecurr,'purchase','PurchaseList');
 
         $this->dataclass = '<div class="pb-5">
                                 <div class="row g-4">
