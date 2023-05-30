@@ -98,7 +98,7 @@ if (isset($_GET['class']) && !empty($_GET['class'])) {
 }
 
 $menu_replace =  str_replace("{usuario}",$_SESSION['firstname'],$menu);
-$menu_replace =  str_replace("{dirsys}",self::DIRSYS,$menu);
+#$menu_replace =  str_replace("{dirsys}",self::DIRSYS,$menu);
 
 // change container size to POS
 $containerclass = (isset($data['class']) && $data['class'] == 'OrderForm')? 'col-12' : 'container';
