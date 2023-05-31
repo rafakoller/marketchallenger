@@ -27,9 +27,9 @@ class User extends Connection {
                 $con = $db->getConnection();
                 $query = "UPDATE user SET `status` = {$status} WHERE id = {$data['key']};";
                 mysqli_query($con, $query) or die(mysqli_error($con));
-                header("Location: /app/view/front.php?class=UserList&status=defined&mode=" . $status . "&user=" . $data['key']);
+                header("Location: ".DIRSYS."/app/view/front.php?class=UserList&status=defined&mode=" . $status . "&user=" . $data['key']);
             } else {
-                header("Location: /app/view/front.php?class=UserList&status=yourself&user=" . $data['key']);
+                header("Location: ".DIRSYS."/app/view/front.php?class=UserList&status=yourself&user=" . $data['key']);
             }
         }
 

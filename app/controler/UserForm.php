@@ -92,7 +92,7 @@ class UserForm extends User
         }
 
         if ($result == 1){
-            $alerts = '$(document).ready(function(){setTimeout(() => {$("#successful").slideToggle("slow");window.location.replace("/app/view/login.php");}, 6000);});';
+            $alerts = '$(document).ready(function(){setTimeout(() => {$("#successful").slideToggle("slow");window.location.replace("'.DIRSYS.'/app/view/login.php");}, 6000);});';
         } else if ($result == 10){
             $alerts = '$(document).ready(function(){setTimeout(() => {$("#usermail").slideToggle("slow");}, 6000);});';
         } else if ($result == 100){

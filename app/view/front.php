@@ -1,9 +1,9 @@
 <?php
 session_start();
-require '../config/parameters..php';
+include '../config/parameters..php';
 date_default_timezone_set (TIMEZONE);
 if(!isset($_SESSION['id'])) {
-    header("Location: /app/view/login.php");
+    header("Location: ".DIRSYS."/app/view/login.php");
 }
 
 include '../controler/HomeView.php';
@@ -75,9 +75,9 @@ if (isset($_GET['class']) && !empty($_GET['class'])) {
             $status = (!empty($returndata['status']))?'&status='.$returndata['status']:'';
             $key = (!empty($returndata['key']))?'&key='.$returndata['key']:'';
             if(isset($returndata['status']) && $returndata['status'] == 'sale') {
-                header("Location: /app/view/front.php?class=OrderList".$status.$key);
+                header("Location: ".DIRSYS."/app/view/front.php?class=OrderList".$status.$key);
             } else {
-                header("Location: /app/view/front.php?class=".$data['class'].$status.$key);
+                header("Location: ".DIRSYS."/app/view/front.php?class=".$data['class'].$status.$key);
             }
 
         } else {
@@ -98,6 +98,7 @@ if (isset($_GET['class']) && !empty($_GET['class'])) {
 }
 
 $menu_replace =  str_replace("{usuario}",$_SESSION['firstname'],$menu);
+#$menu_replace =  str_replace("{dirsys}",self::DIRSYS,$menu);
 
 // change container size to POS
 $containerclass = (isset($data['class']) && $data['class'] == 'OrderForm')? 'col-12' : 'container';

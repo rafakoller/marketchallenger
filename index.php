@@ -1,9 +1,10 @@
 <?php
 session_start();
+include 'app/config/parameters..php';
 if(isset($_SESSION['id'])) {
-    header("Location: /app/view/front.php");
+    header("Location: ".DIRSYS."/app/view/front.php");
 } else {
-    header("Location: /app/view/login.php");
+    header("Location: ".DIRSYS."/app/view/login.php");
 }
 ?>
 <!DOCTYPE html>
