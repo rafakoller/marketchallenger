@@ -9,11 +9,15 @@ Challenge to develop a simple CRM for a market.
 
 As instruções abaixo permitirão que você tenha uma cópia do projeto em operação na sua máquina para fins de desenvolvimento colaborativo e testes.
 
+### Demo
+https://xip7.com.br/market
+* usuário: `admin`
+* senha: `Test12`
+
 ### Pré-requisitos
-
-• PHP 7.4 ou superior;
-
-• PostgreSQL ou MySQL;
+* PHP 7.4 ou superior;
+* PostgreSQL ou MySQL;
 
 ### Instalação
-
+#### `git clone https://github.com/rafakoller/marketchallenger.git`
+Baixe o repositório em seu servidor de preferência e defina os parâmetros globais de banco de dados em `app/config/db_config.php` e em `app/config/parameters.php`
