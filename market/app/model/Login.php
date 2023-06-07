@@ -14,6 +14,11 @@ class Login extends Connection {
 
     public $email;
 
+    function __construct()
+    {
+
+    }
+
     /**
      * Login user on system
      * @param $username
