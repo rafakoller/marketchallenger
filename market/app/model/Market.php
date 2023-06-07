@@ -72,7 +72,7 @@ class Market extends Connection {
     {
         $db = new Connection();
         $con = $db->getConnection();
-        $query = "select SUM(invoicing) as invoicing, COUNT(qnt) as qnt, date, day from (SELECT SUM((b.valtax * b.qnt) + (b.valprod * b.qnt)) as invoicing, COUNT(a.user_id) as qnt, date(a.created_at) as `date`, day(a.created_at) as `day` FROM `order` a LEFT JOIN order_products b ON a.id = b.order_id  AND a.created_at >= (CURDATE( ) - INTERVAL 30 DAY) GROUP BY a.id, date(a.created_at) ORDER BY a.created_at asc) as ordered group by date order by date asc;";
+        $query = "select SUM(invoicing) as invoicing, COUNT(qnt) as qnt, date, day from (SELECT SUM((b.valtax * b.qnt) + (b.valprod * b.qnt)) as invoicing, COUNT(a.user_id) as qnt, date(a.created_at) as `date`, DATE_FORMAT(a.created_at, '%d/%m') as `day` FROM `order` a LEFT JOIN order_products b ON a.id = b.order_id  AND a.created_at >= (CURDATE( ) - INTERVAL 30 DAY) GROUP BY a.id, date(a.created_at) ORDER BY a.created_at asc) as ordered group by date order by date asc;";
         $results = mysqli_query($con, $query) or die(mysqli_error($con));
         $orders = [];
         foreach ($results as $res)

@@ -163,7 +163,7 @@ class HomeView extends Market {
                     <div class="card shadow p-3 pb-0 pt-1">
                         <div class="col-auto p-3 pb-4">
                           <h3>Top 10 best products</h3>
-                          <p class="text-700 lh-sm mb-0 p-3 pt-0 pb-0">Best selling products</p>
+                          <p class="text-700 lh-sm mb-0 p-3 pt-0 pb-0">Best selling products in last 30 days</p>
                         </div>
                         <div id="chart_top_sellers" class="echart-total-sales-chart" style="min-height:320px;" ></div>
                     </div>
