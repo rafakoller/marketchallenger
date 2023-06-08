@@ -97,8 +97,8 @@ class HomeView extends Market {
                       function drawChartSeller() {
                         var datas = new google.visualization.DataTable();
                         datas.addColumn("string", "Day");
-                        datas.addColumn("number", "Sales");
-                        datas.addColumn("number", "Invoicing");
+                        datas.addColumn("number", "Sales", "amount ");
+                        datas.addColumn("number", "Invoicing", "$ ");
                         datas.addRows([
                             '.$lastsells.'
                         ]);

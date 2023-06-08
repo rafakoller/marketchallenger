@@ -67,7 +67,7 @@ class Purchase extends Connection
     {
         $db = new Connection();
         $con = $db->getConnection();
-        $query = "SELECT * FROM `purchase` ORDER BY `id`;";
+        $query = "SELECT * FROM `purchase` ORDER BY `id` DESC;";
         $result = mysqli_query($con, $query) or die(mysqli_error($con));
         $row = mysqli_fetch_assoc($result);
         return $row;
@@ -84,7 +84,7 @@ class Purchase extends Connection
         $offset = ($pagecurr == 1 || $pagecurr == 0)?0:($pagecurr - 1)*$limite;
         $db = new Connection();
         $con = $db->getConnection();
-        $query = "SELECT * FROM `purchase` ORDER BY `id` ASC  LIMIT ".$limite."  OFFSET ".$offset.";";
+        $query = "SELECT * FROM `purchase` ORDER BY `id` DESC  LIMIT ".$limite."  OFFSET ".$offset.";";
         $results = mysqli_query($con, $query) or die(mysqli_error($con));
         $listyps = '';
         $vazio = true;
